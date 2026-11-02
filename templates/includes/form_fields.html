@@ -1,0 +1,10 @@
+{% comment %}
+  Every field of `form`, stacked: label, help text, errors and input.
+  {% include "includes/form_fields.html" with form=form %}
+{% endcomment %}
+{% if form.non_field_errors %}<div class="mb-4">{{ form.non_field_errors }}</div>{% endif %}
+<div class="form-fields">
+  {% for field in form %}
+    {{ field.as_field_group }}
+  {% endfor %}
+</div>

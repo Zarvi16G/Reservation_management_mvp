@@ -1,0 +1,102 @@
+// Elements Django renders for us (forms, headings, links): colours and type.
+// Spacing and sizes of these elements are layout and stay in Tailwind.
+@use 'palette' as *;
+@use 'mixins' as *;
+
+body {
+  background: color('bg');
+  color: color('fg');
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  color: color('key');
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h2 {
+  color: color('fg');
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+a {
+  color: color('key');
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: color('fg');
+  }
+}
+
+:focus-visible {
+  @include focus-ring;
+}
+
+label,
+legend {
+  color: color('muted');
+}
+
+legend {
+  font-weight: 600;
+}
+
+input:not([type='checkbox'], [type='radio']),
+select,
+textarea {
+  border-radius: $radius;
+  border-color: color('line-strong');
+  background: color('surface');
+  color: color('fg');
+
+  &::placeholder {
+    color: color('muted');
+  }
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: color('accent');
+}
+
+button {
+  border-radius: $radius;
+  font-weight: 600;
+
+  @include button('accent', 'accent-fg', 'accent-hover');
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+fieldset {
+  border-radius: $radius;
+  background: color('surface');
+}
+
+dialog {
+  border: 1px solid color('line-strong');
+  border-radius: $radius;
+  background: color('surface');
+  color: color('fg');
+}
+
+// {{ field.as_field_group }}: help texts and errors.
+.helptext,
+.helptext ul {
+  color: color('muted');
+  font-size: 0.875rem;
+}
+
+.errorlist {
+  color: color('error');
+  font-size: 0.875rem;
+}

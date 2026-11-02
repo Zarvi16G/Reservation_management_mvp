@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Reschedule" %}{% endblock %}
+
+{% block content %}
+  <h1>{% translate "Reschedule booking" %}</h1>
+  <p class="mb-1">
+    <strong>{{ booking.resource }}</strong> — {{ booking.start|date:"l j F" }},
+    {{ booking.start|time:"H:i" }}–{{ booking.end|time:"H:i" }}
+  </p>
+  <p class="muted mb-4">{% translate "Choose a new start time. The booking keeps its length and its court." %}</p>
+  <p class="notice mb-6 rounded-lg border p-4">
+    {% translate "Want to book several hours or days at once? Cancel this booking and book the whole block you need." %}
+    <a href="{% url 'book' %}">{% translate "Book a court" %}</a>
+  </p>
+
+  {% if days %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="flex flex-col gap-4">
+        {% for day, starts in days %}
+          <fieldset class="rounded-lg border border-line-strong p-4">
+            <legend class="px-1">{{ day|date:"l j F" }}</legend>
+            <div class="grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-8">
+              {% for start in starts %}
+                <label class="slot flex cursor-pointer items-center justify-center gap-2 rounded-lg border px-2 py-2">
+                  <input type="radio" name="start" value="{{ start.isoformat }}" required>
+                  {{ start|time:"H:i" }}
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
+      </div>
+      {# Like the slot picker: the line stays, only the button floats. #}
+      <div class="mt-6 border-t border-line"></div>
+      <div class="pointer-events-none sticky bottom-0 z-10 py-4">
+        <button type="submit" class="floating-action pointer-events-auto w-full sm:w-auto">{% translate "Reschedule" %}</button>
+      </div>
+    </form>
+  {% else %}
+    <p>{% translate "There is no other free time for this booking in the next 7 days." %}</p>
+  {% endif %}
+
+  <p class="mt-6"><a href="{% url 'my_bookings' %}">{% translate "Back to my bookings" %}</a></p>
+{% endblock %}

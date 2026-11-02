@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Log in" %}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto w-full max-w-md">
+    <h1>{% translate "Log in" %}</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      {% include "includes/form_fields.html" with form=form %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <button type="submit">{% translate "Log in" %}</button>
+        <a href="{% url 'password_reset' %}">{% translate "Forgot your password?" %}</a>
+      </div>
+    </form>
+
+    <p class="mt-6">
+      {% translate "Don't have an account?" %}
+      <a href="{% url 'signup' %}">{% translate "Sign up" %}</a>
+    </p>
+  </div>
+{% endblock %}

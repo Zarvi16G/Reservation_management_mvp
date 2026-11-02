@@ -1,0 +1,68 @@
+/*
+ * Tailwind: LAYOUT ONLY (structure, spacing, columns, responsive).
+ * The design (colours, type, components) is SCSS, in static/scss/.
+ *
+ *   ./bin/tailwindcss -i static/src/input.css -o static/css/main.css --watch   (develop)
+ *   ./bin/tailwindcss -i static/src/input.css -o static/css/main.css --minify  (deploy)
+ */
+
+@import 'tailwindcss';
+
+@source '../../templates';
+@source '../js';
+
+/*
+ * Palette names for the few colour classes in templates (border-line,
+ * bg-surface, bg-band…). The colours are defined in static/scss/_palette.scss
+ * as CSS variables; `inline` makes these classes just point at them.
+ */
+@theme inline {
+  --color-page: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-band: var(--band);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-quiet: var(--muted);
+}
+
+/* Spacing and sizes of elements Django renders for us (forms, headings). */
+@layer base {
+  h1 {
+    @apply mb-4;
+  }
+
+  h2 {
+    @apply mt-6 mb-3;
+  }
+
+  input:not([type='checkbox'], [type='radio']),
+  select,
+  textarea {
+    @apply w-full border px-3 py-2;
+  }
+
+  button {
+    @apply cursor-pointer border px-4 py-2;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+
+  /* {{ field.as_field_group }}: label, help text, errors and input, stacked. */
+  .form-fields > div {
+    @apply mb-4 flex flex-col gap-1;
+  }
+}
+
+/* Layout of the pieces built by static/js/. */
+@layer components {
+  .customer-results {
+    @apply mt-1 max-h-64 overflow-y-auto border;
+  }
+
+  .customer-results button {
+    @apply w-full rounded-none border-0 text-left;
+  }
+}

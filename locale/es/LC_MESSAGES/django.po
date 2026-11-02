@@ -1,0 +1,983 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-02 16:19-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: config/settings/base.py:127
+msgid "Spanish"
+msgstr "Español"
+
+#: config/settings/base.py:128
+msgid "English"
+msgstr "Inglés"
+
+#: reservation_managment/admin.py:25
+msgid "Time zone"
+msgstr "Zona horaria"
+
+#: reservation_managment/admin.py:58
+msgid "Contact"
+msgstr "Contacto"
+
+#: reservation_managment/forms.py:18 templates/registration/profile.html:19
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: reservation_managment/forms.py:19
+msgid "Booking confirmations are sent here."
+msgstr "Aquí te enviamos las confirmaciones de reserva."
+
+#: reservation_managment/forms.py:38
+msgid "Current password"
+msgstr "Contraseña actual"
+
+#: reservation_managment/forms.py:41
+msgid "Only needed to change your email."
+msgstr "Solo hace falta para cambiar tu correo."
+
+#: reservation_managment/forms.py:62
+msgid "Enter your current password to change your email."
+msgstr "Escribe tu contraseña actual para cambiar tu correo."
+
+#: reservation_managment/forms.py:65
+msgid "The password is not correct."
+msgstr "La contraseña no es correcta."
+
+#: reservation_managment/models.py:43
+#, python-format
+msgid "\"%(value)s\" is not a valid time zone."
+msgstr "\"%(value)s\" no es una zona horaria válida."
+
+#: reservation_managment/models.py:69
+msgid "time zone"
+msgstr "zona horaria"
+
+#: reservation_managment/models.py:74
+msgid ""
+"Where the courts are. Opening hours and bookings are shown in this zone. Set"
+" it once at the start: changing it later shifts how existing bookings are "
+"displayed."
+msgstr ""
+"Donde están las pistas. Los horarios y las reservas se muestran en esta "
+"zona. Configúrala una vez al inicio: si la cambias después, cambia cómo se "
+"ven las reservas existentes."
+
+#: reservation_managment/models.py:81 reservation_managment/models.py:82
+msgid "site settings"
+msgstr "configuración del sitio"
+
+#: reservation_managment/models.py:85
+msgid "Site settings"
+msgstr "Configuración del sitio"
+
+#: reservation_managment/models.py:106
+msgid "email address"
+msgstr "correo electrónico"
+
+#: reservation_managment/models.py:108
+msgid "An account with this email already exists."
+msgstr "Ya existe una cuenta con este correo."
+
+#: reservation_managment/models.py:110
+msgid "phone"
+msgstr "teléfono"
+
+#: reservation_managment/models.py:112
+msgid "language"
+msgstr "idioma"
+
+#: reservation_managment/models.py:116
+msgid "Language of the emails this user receives."
+msgstr "Idioma de los correos que recibe este usuario."
+
+#: reservation_managment/models.py:119
+msgid "email verified"
+msgstr "correo verificado"
+
+#: reservation_managment/models.py:121
+msgid "Customers must open the link sent to their email before booking."
+msgstr ""
+"Los clientes deben abrir el enlace enviado a su correo antes de reservar."
+
+#: reservation_managment/models.py:137 reservation_managment/models.py:152
+msgid "name"
+msgstr "nombre"
+
+#: reservation_managment/models.py:138 reservation_managment/models.py:159
+msgid "description"
+msgstr "descripción"
+
+#: reservation_managment/models.py:142 reservation_managment/models.py:157
+msgid "resource type"
+msgstr "tipo de recurso"
+
+#: reservation_managment/models.py:143
+msgid "resource types"
+msgstr "tipos de recurso"
+
+#: reservation_managment/models.py:161
+msgid "capacity"
+msgstr "capacidad"
+
+#: reservation_managment/models.py:163
+msgid "Maximum number of people."
+msgstr "Número máximo de personas."
+
+#: reservation_managment/models.py:165
+msgid "location"
+msgstr "ubicación"
+
+#: reservation_managment/models.py:166
+msgid "image"
+msgstr "imagen"
+
+#: reservation_managment/models.py:168
+msgid "active"
+msgstr "activo"
+
+#: reservation_managment/models.py:170
+msgid "Inactive resources cannot be booked."
+msgstr "Los recursos inactivos no se pueden reservar."
+
+#: reservation_managment/models.py:172 reservation_managment/models.py:325
+#: reservation_managment/models.py:460 reservation_managment/models.py:652
+msgid "created at"
+msgstr "creado el"
+
+#: reservation_managment/models.py:173
+msgid "updated at"
+msgstr "actualizado el"
+
+#: reservation_managment/models.py:177 reservation_managment/models.py:251
+#: reservation_managment/models.py:440
+msgid "resource"
+msgstr "recurso"
+
+#: reservation_managment/models.py:178
+msgid "resources"
+msgstr "recursos"
+
+#: reservation_managment/models.py:239
+msgid "Monday"
+msgstr "Lunes"
+
+#: reservation_managment/models.py:240
+msgid "Tuesday"
+msgstr "Martes"
+
+#: reservation_managment/models.py:241
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#: reservation_managment/models.py:242
+msgid "Thursday"
+msgstr "Jueves"
+
+#: reservation_managment/models.py:243
+msgid "Friday"
+msgstr "Viernes"
+
+#: reservation_managment/models.py:244
+msgid "Saturday"
+msgstr "Sábado"
+
+#: reservation_managment/models.py:245
+msgid "Sunday"
+msgstr "Domingo"
+
+#: reservation_managment/models.py:253
+msgid "weekday"
+msgstr "día de la semana"
+
+#: reservation_managment/models.py:254
+msgid "start time"
+msgstr "hora de inicio"
+
+#: reservation_managment/models.py:255
+msgid "end time"
+msgstr "hora de fin"
+
+#: reservation_managment/models.py:259
+msgid "availability"
+msgstr "disponibilidad"
+
+#: reservation_managment/models.py:260
+msgid "availabilities"
+msgstr "disponibilidades"
+
+#: reservation_managment/models.py:277
+msgid "End time must be after start time."
+msgstr "La hora de fin debe ser posterior a la de inicio."
+
+#: reservation_managment/models.py:280
+msgid "Times must be on the hour or half hour (:00 or :30)."
+msgstr "Las horas deben ser en punto o y media (:00 o :30)."
+
+#: reservation_managment/models.py:287
+msgid "Opening hours must last whole hours (e.g. 08:30-21:30)."
+msgstr ""
+"El horario de apertura debe durar horas completas (p. ej. 08:30-21:30)."
+
+#: reservation_managment/models.py:297
+msgid "This time range overlaps another one on the same day."
+msgstr "Este rango se cruza con otro del mismo día."
+
+#: reservation_managment/models.py:321 reservation_managment/models.py:434
+#: reservation_managment/models.py:633
+msgid "user"
+msgstr "usuario"
+
+#: reservation_managment/models.py:323
+msgid "amount paid"
+msgstr "monto pagado"
+
+#: reservation_managment/models.py:324
+msgid "payment reference"
+msgstr "referencia de pago"
+
+#: reservation_managment/models.py:329 reservation_managment/models.py:448
+#: reservation_managment/models.py:649
+msgid "booking request"
+msgstr "solicitud de reserva"
+
+#: reservation_managment/models.py:330
+msgid "booking requests"
+msgstr "solicitudes de reserva"
+
+#: reservation_managment/models.py:427
+msgid "Confirmed"
+msgstr "Confirmada"
+
+#: reservation_managment/models.py:428
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#: reservation_managment/models.py:449
+msgid "Empty for bookings made one by one (e.g. in the admin)."
+msgstr "Vacío en las reservas hechas una por una (p. ej. en el admin)."
+
+#: reservation_managment/models.py:451
+msgid "start"
+msgstr "inicio"
+
+#: reservation_managment/models.py:452
+msgid "end"
+msgstr "fin"
+
+#: reservation_managment/models.py:454
+msgid "status"
+msgstr "estado"
+
+#: reservation_managment/models.py:459
+msgid "notes"
+msgstr "notas"
+
+#: reservation_managment/models.py:464 reservation_managment/models.py:641
+msgid "booking"
+msgstr "reserva"
+
+#: reservation_managment/models.py:465
+msgid "bookings"
+msgstr "reservas"
+
+#: reservation_managment/models.py:552
+msgid "End must be after start."
+msgstr "El fin debe ser posterior al inicio."
+
+#: reservation_managment/models.py:558
+msgid "Bookings must start and end on :00 or :30."
+msgstr "Las reservas deben empezar y terminar en :00 o :30."
+
+#: reservation_managment/models.py:561
+msgid "A booking must last at least 1 hour."
+msgstr "Una reserva debe durar al menos 1 hora."
+
+#: reservation_managment/models.py:564
+msgid "A booking must last whole hours (1h, 2h, 3h...)."
+msgstr "Una reserva debe durar horas completas (1 h, 2 h, 3 h...)."
+
+#: reservation_managment/models.py:580
+msgid "A booking that has already started cannot be changed."
+msgstr "Una reserva que ya empezó no se puede cambiar."
+
+#: reservation_managment/models.py:582
+msgid "Bookings must be in the future."
+msgstr "Las reservas deben ser en el futuro."
+
+#: reservation_managment/models.py:587
+#, python-format
+msgid "Bookings can only be made up to %(days)s days ahead."
+msgstr "Solo se puede reservar con hasta %(days)s días de anticipación."
+
+#: reservation_managment/models.py:593
+msgid "This resource is not available for booking."
+msgstr "Este recurso no está disponible para reservar."
+
+#: reservation_managment/models.py:601
+msgid "The resource is not open at this time."
+msgstr "El recurso no está abierto a esta hora."
+
+#: reservation_managment/models.py:611
+msgid "This time slot is already booked."
+msgstr "Este horario ya está reservado."
+
+#: reservation_managment/models.py:624
+msgid "Booking confirmed"
+msgstr "Reserva confirmada"
+
+#: reservation_managment/models.py:625
+msgid "Booking cancelled"
+msgstr "Reserva cancelada"
+
+#: reservation_managment/models.py:626
+msgid "Booking rescheduled"
+msgstr "Reserva reprogramada"
+
+#: reservation_managment/models.py:627
+msgid "Booking request confirmed"
+msgstr "Solicitud de reserva confirmada"
+
+#: reservation_managment/models.py:651
+msgid "kind"
+msgstr "tipo"
+
+#: reservation_managment/models.py:654
+msgid "emailed at"
+msgstr "enviado el"
+
+#: reservation_managment/models.py:657
+msgid "Empty means the email has not been sent yet."
+msgstr "Vacío significa que el correo aún no se ha enviado."
+
+#: reservation_managment/models.py:662
+msgid "notification"
+msgstr "notificación"
+
+#: reservation_managment/models.py:663
+msgid "notifications"
+msgstr "notificaciones"
+
+#: reservation_managment/views.py:85
+#, python-format
+msgid ""
+"We sent a link to %(email)s. Open it to verify your email and start booking."
+msgstr ""
+"Enviamos un enlace a %(email)s. Ábrelo para verificar tu correo y empezar a "
+"reservar."
+
+#: reservation_managment/views.py:89
+msgid "We couldn't send the verification email. Try again later."
+msgstr "No pudimos enviar el correo de verificación. Inténtalo más tarde."
+
+#: reservation_managment/views.py:100
+msgid "Your email is verified. You can book now."
+msgstr "Tu correo está verificado. Ya puedes reservar."
+
+#: reservation_managment/views.py:170
+msgid "Your profile has been updated."
+msgstr "Tu perfil se actualizó."
+
+#: reservation_managment/views.py:305
+msgid "Select at least one time slot."
+msgstr "Selecciona al menos un bloque."
+
+#: reservation_managment/views.py:336
+#, python-format
+msgid ""
+"You reached the limit of %(limit)s bookings per day. Try again tomorrow."
+msgstr "Llegaste al límite de %(limit)s reservas por día. Inténtalo mañana."
+
+#: reservation_managment/views.py:388 reservation_managment/views.py:401
+msgid "This booking can no longer be changed."
+msgstr "Esta reserva ya no se puede cambiar."
+
+#: reservation_managment/views.py:393
+#, python-format
+msgid "Booking cancelled: %(booking)s"
+msgstr "Reserva cancelada: %(booking)s"
+
+#: reservation_managment/views.py:412 reservation_managment/views.py:419
+msgid "That time is no longer available. Pick another one."
+msgstr "Ese horario ya no está disponible. Elige otro."
+
+#: reservation_managment/views.py:422
+#, python-format
+msgid "Booking rescheduled: %(booking)s"
+msgstr "Reserva reprogramada: %(booking)s"
+
+#: templates/403.html:4 templates/403.html:8
+msgid "Access denied"
+msgstr "Acceso denegado"
+
+#: templates/403.html:9
+msgid "You don't have permission to do this."
+msgstr "No tienes permiso para hacer esto."
+
+#: templates/403.html:10 templates/404.html:10 templates/429.html:10
+msgid "Go to the home page"
+msgstr "Ir al inicio"
+
+#: templates/404.html:4 templates/404.html:8
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+#: templates/404.html:9
+msgid "This page doesn't exist, or it isn't yours."
+msgstr "Esta página no existe o no es tuya."
+
+#: templates/429.html:4 templates/429.html:8
+msgid "Too many attempts"
+msgstr "Demasiados intentos"
+
+#: templates/429.html:9
+msgid ""
+"For security, this action is paused for a while. Please wait a few minutes "
+"and try again."
+msgstr ""
+"Por seguridad, esta acción está en pausa por un rato. Espera unos minutos e "
+"inténtalo de nuevo."
+
+#: templates/base.html:8 templates/base.html:21 templates/emails/_footer.txt:3
+#: templates/registration/password_reset_subject.txt:1
+#: templates/registration/verify_email_subject.txt:1
+msgid "Reservation Management"
+msgstr "Gestión de Reservas"
+
+#: templates/base.html:28
+msgid "Menu"
+msgstr "Menú"
+
+#: templates/base.html:35 templates/bookings/book.html:4
+msgid "Book"
+msgstr "Reservar"
+
+#: templates/base.html:36 templates/bookings/my_bookings.html:4
+#: templates/bookings/my_bookings.html:8
+msgid "My bookings"
+msgstr "Mis reservas"
+
+#: templates/base.html:37 templates/registration/profile.html:4
+#: templates/registration/profile.html:8
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/base.html:39
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/base.html:45
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: templates/base.html:49 templates/home.html:14
+#: templates/registration/login.html:4 templates/registration/login.html:8
+#: templates/registration/login.html:15
+#: templates/registration/password_reset_complete.html:10
+#: templates/registration/signup.html:22
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: templates/base.html:50 templates/home.html:13
+#: templates/registration/login.html:22 templates/registration/signup.html:4
+#: templates/registration/signup.html:17
+msgid "Sign up"
+msgstr "Crear cuenta"
+
+#: templates/base.html:56
+msgid "Language"
+msgstr "Idioma"
+
+#: templates/base.html:63
+msgid "Change"
+msgstr "Cambiar"
+
+#: templates/base.html:72 templates/bookings/book.html:109
+msgid "Close"
+msgstr "Cerrar"
+
+#: templates/base.html:88
+msgid "Reservation Management — demo project"
+msgstr "Gestión de Reservas — proyecto de demostración"
+
+#: templates/bookings/book.html:7 templates/bookings/my_bookings.html:9
+#: templates/bookings/reschedule.html:15 templates/home.html:9
+msgid "Book a court"
+msgstr "Reservar una pista"
+
+#: templates/bookings/book.html:8
+msgid ""
+"Pick the free 1-hour slots you want, on one or several courts and days. "
+"Back-to-back slots become a single booking."
+msgstr ""
+"Elige los bloques libres de 1 hora que quieras, en una o varias pistas y "
+"días. Los bloques seguidos se unen en una sola reserva."
+
+#: templates/bookings/book.html:12
+msgid "Type"
+msgstr "Tipo"
+
+#: templates/bookings/book.html:14
+msgid "All"
+msgstr "Todos"
+
+#: templates/bookings/book.html:23
+msgid "Filter"
+msgstr "Filtrar"
+
+#: templates/bookings/book.html:33
+msgid "Book for customer"
+msgstr "Reservar para un cliente"
+
+#: templates/bookings/book.html:36
+msgid "Myself — or type the customer’s email"
+msgstr "Para mí — o escribe el correo del cliente"
+
+#: templates/bookings/book.html:40 templates/bookings/book.html:44
+msgid "Booking for: myself"
+msgstr "Reserva para: mí"
+
+#: templates/bookings/book.html:41 templates/bookings/book.html:44
+msgid "Booking for:"
+msgstr "Reserva para:"
+
+#: templates/bookings/book.html:42
+msgid ""
+"Choose a customer from the list, or clear the field to book for yourself."
+msgstr "Elige un cliente de la lista, o borra el campo para reservar para ti."
+
+#: templates/bookings/book.html:43
+msgid "No customer with that email."
+msgstr "No hay ningún cliente con ese correo."
+
+#: templates/bookings/book.html:58
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+#: templates/bookings/book.html:71
+msgid "No free slots this day."
+msgstr "No hay bloques libres este día."
+
+#: templates/bookings/book.html:80
+msgid "Continue to payment"
+msgstr "Continuar al pago"
+
+#: templates/bookings/book.html:88
+msgid "Payment approved. Booking confirmed!"
+msgstr "Pago aprobado. ¡Reserva confirmada!"
+
+#: templates/bookings/book.html:93
+#, python-format
+msgid "Charged %(amount)s %(currency)s · reference %(reference)s"
+msgstr "Cobrado %(amount)s %(currency)s · referencia %(reference)s"
+
+#: templates/bookings/book.html:96
+msgid "Nothing could be booked"
+msgstr "No se pudo reservar nada"
+
+#: templates/bookings/book.html:97
+msgid "None of the selected slots is still available. Nothing was charged."
+msgstr ""
+"Ninguno de los bloques seleccionados sigue disponible. No se cobró nada."
+
+#: templates/bookings/book.html:103
+msgid "this booking is no longer available, so it was skipped."
+msgstr "esta reserva ya no se encuentra disponible, por lo cual se omitió."
+
+#: templates/bookings/book.html:110
+msgid "See my bookings"
+msgstr "Ver mis reservas"
+
+#: templates/bookings/checkout.html:4 templates/bookings/checkout.html:30
+msgid "Payment"
+msgstr "Pago"
+
+#: templates/bookings/checkout.html:7
+msgid "Confirm and pay"
+msgstr "Confirmar y pagar"
+
+#: templates/bookings/checkout.html:11
+#, python-format
+msgid "Booking in the name of <strong>%(name)s</strong>."
+msgstr "Reserva a nombre de <strong>%(name)s</strong>."
+
+#: templates/bookings/checkout.html:18
+msgid "Your selection"
+msgstr "Tu selección"
+
+#: templates/bookings/checkout.html:32
+#, python-format
+msgid ""
+"To confirm your booking, a minimum charge of <strong>%(price)s "
+"%(currency)s</strong> will be made to your card as a guarantee."
+msgstr ""
+"Para confirmar tu reserva se hará un cobro mínimo de <strong>%(price)s "
+"%(currency)s</strong> a tu tarjeta como garantía."
+
+#: templates/bookings/checkout.html:35
+msgid "Total"
+msgstr "Total"
+
+#: templates/bookings/checkout.html:44
+#, python-format
+msgid "Pay %(price)s %(currency)s"
+msgstr "Pagar %(price)s %(currency)s"
+
+#: templates/bookings/checkout.html:47
+msgid "Processing payment…"
+msgstr "Procesando pago…"
+
+#: templates/bookings/checkout.html:48
+msgid "Payment approved"
+msgstr "Pago aprobado"
+
+#: templates/bookings/checkout.html:52
+msgid "Demo project"
+msgstr "Proyecto de prueba"
+
+#: templates/bookings/checkout.html:53
+msgid ""
+"There is only a Pay button because this is a test project: no card details "
+"are asked for and there is no real payment gateway. The payment step exists "
+"to show how a booking would be secured by a payment. The payment is always "
+"approved automatically, so it never fails."
+msgstr ""
+"Solo existe el botón Pagar porque este es un proyecto de prueba: no se piden"
+" datos de tarjeta y no hay una pasarela de pago real. El paso de pago existe"
+" para mostrar cómo una reserva quedaría asegurada con un pago. El pago "
+"siempre se aprueba automáticamente, así que nunca falla."
+
+#: templates/bookings/checkout.html:58
+msgid "Back to the slot picker"
+msgstr "Volver a los bloques"
+
+#: templates/bookings/my_bookings.html:12
+msgid "Upcoming"
+msgstr "Próximas"
+
+#: templates/bookings/my_bookings.html:16
+msgid "Court"
+msgstr "Pista"
+
+#: templates/bookings/my_bookings.html:17
+msgid "Day"
+msgstr "Día"
+
+#: templates/bookings/my_bookings.html:18
+msgid "Time"
+msgstr "Hora"
+
+#: templates/bookings/my_bookings.html:28 templates/bookings/reschedule.html:4
+#: templates/bookings/reschedule.html:37
+msgid "Reschedule"
+msgstr "Reprogramar"
+
+#: templates/bookings/my_bookings.html:32
+msgid "Cancel this booking?"
+msgstr "¿Cancelar esta reserva?"
+
+#: templates/bookings/my_bookings.html:34
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/bookings/my_bookings.html:41
+msgid "You have no upcoming bookings."
+msgstr "No tienes reservas próximas."
+
+#: templates/bookings/my_bookings.html:44
+msgid "History"
+msgstr "Historial"
+
+#: templates/bookings/my_bookings.html:57
+msgid "No past or cancelled bookings."
+msgstr "No hay reservas pasadas ni canceladas."
+
+#: templates/bookings/reschedule.html:7
+msgid "Reschedule booking"
+msgstr "Reprogramar reserva"
+
+#: templates/bookings/reschedule.html:12
+msgid "Choose a new start time. The booking keeps its length and its court."
+msgstr ""
+"Elige una nueva hora de inicio. La reserva mantiene su duración y su pista."
+
+#: templates/bookings/reschedule.html:14
+msgid ""
+"Want to book several hours or days at once? Cancel this booking and book the"
+" whole block you need."
+msgstr ""
+"¿Quieres reservar varias horas o varios días a la vez? Cancela esta reserva "
+"y reserva el bloque completo que necesites."
+
+#: templates/bookings/reschedule.html:41
+msgid "There is no other free time for this booking in the next 7 days."
+msgstr "No hay otro horario libre para esta reserva en los próximos 7 días."
+
+#: templates/bookings/reschedule.html:44
+msgid "Back to my bookings"
+msgstr "Volver a mis reservas"
+
+#: templates/bookings/verify_needed.html:4
+#: templates/bookings/verify_needed.html:8
+#: templates/registration/verify_email_subject.txt:1
+msgid "Verify your email"
+msgstr "Verifica tu correo"
+
+#: templates/bookings/verify_needed.html:10
+#, python-format
+msgid ""
+"To book, first open the link we sent to <strong>%(email)s</strong>. This "
+"keeps bots and fake accounts out."
+msgstr ""
+"Para reservar, primero abre el enlace que enviamos a "
+"<strong>%(email)s</strong>. Así evitamos bots y cuentas falsas."
+
+#: templates/bookings/verify_needed.html:12
+msgid "Didn't get it? Check your spam folder, or ask for a new one."
+msgstr "¿No te llegó? Revisa la carpeta de spam o pide uno nuevo."
+
+#: templates/bookings/verify_needed.html:15
+msgid "Send the link again"
+msgstr "Enviar el enlace de nuevo"
+
+#: templates/bookings/verify_needed.html:16
+msgid "Wrong email? Change it in your profile"
+msgstr "¿Correo equivocado? Cámbialo en tu perfil"
+
+#: templates/emails/_footer.txt:1
+msgid "See and manage your bookings:"
+msgstr "Mira y gestiona tus reservas:"
+
+#: templates/emails/booking_cancelled.txt:1
+#: templates/emails/booking_confirmed.txt:1
+#: templates/emails/booking_rescheduled.txt:1
+#: templates/emails/request_confirmed.txt:1
+#: templates/registration/password_reset_email.txt:1
+#: templates/registration/verify_email.txt:1
+#, python-format
+msgid "Hi %(name)s,"
+msgstr "Hola %(name)s:"
+
+#: templates/emails/booking_cancelled.txt:3
+msgid "This booking was cancelled and the time is free again:"
+msgstr "Esta reserva se canceló y el horario quedó libre de nuevo:"
+
+#: templates/emails/booking_cancelled_subject.txt:1
+msgid "Your booking was cancelled"
+msgstr "Tu reserva fue cancelada"
+
+#: templates/emails/booking_confirmed.txt:3
+#: templates/emails/request_confirmed.txt:3
+msgid "Your booking is confirmed:"
+msgstr "Tu reserva está confirmada:"
+
+#: templates/emails/booking_confirmed_subject.txt:1
+#: templates/emails/request_confirmed_subject.txt:1
+msgid "Your booking is confirmed"
+msgstr "Tu reserva está confirmada"
+
+#: templates/emails/booking_rescheduled.txt:3
+msgid "Your booking was moved. This is the new time:"
+msgstr "Tu reserva se movió. Este es el nuevo horario:"
+
+#: templates/emails/booking_rescheduled_subject.txt:1
+msgid "Your booking was rescheduled"
+msgstr "Tu reserva fue reprogramada"
+
+#: templates/emails/request_confirmed.txt:6
+#, python-format
+msgid "Charged: %(amount)s %(currency)s · payment reference %(reference)s"
+msgstr "Cobrado: %(amount)s %(currency)s · referencia de pago %(reference)s"
+
+#: templates/home.html:6
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: templates/home.html:7
+msgid "Book and manage your reservations."
+msgstr "Reserva y gestiona tus reservas."
+
+#: templates/home.html:11
+msgid "You need an account to book."
+msgstr "Necesitas una cuenta para reservar."
+
+#: templates/includes/clock.html:3
+msgid "Local time at the courts"
+msgstr "Hora local en las canchas"
+
+#: templates/registration/login.html:16
+#: templates/registration/password_reset_form.html:4
+#: templates/registration/password_reset_form.html:8
+msgid "Forgot your password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: templates/registration/login.html:21
+msgid "Don't have an account?"
+msgstr "¿No tienes cuenta?"
+
+#: templates/registration/password_change_done.html:4
+#: templates/registration/password_change_done.html:8
+msgid "Password changed"
+msgstr "Contraseña cambiada"
+
+#: templates/registration/password_change_done.html:9
+msgid "Your password has been changed."
+msgstr "Tu contraseña se cambió."
+
+#: templates/registration/password_change_done.html:10
+#: templates/registration/password_change_form.html:14
+msgid "Back to my profile"
+msgstr "Volver a mi perfil"
+
+#: templates/registration/password_change_form.html:4
+#: templates/registration/password_change_form.html:8
+#: templates/registration/password_change_form.html:12
+#: templates/registration/profile.html:29
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: templates/registration/password_reset_complete.html:4
+#: templates/registration/password_reset_complete.html:8
+msgid "Password saved"
+msgstr "Contraseña guardada"
+
+#: templates/registration/password_reset_complete.html:9
+msgid "You can now log in with your new password."
+msgstr "Ya puedes iniciar sesión con tu nueva contraseña."
+
+#: templates/registration/password_reset_confirm.html:4
+#: templates/registration/password_reset_confirm.html:9
+msgid "Choose a new password"
+msgstr "Elige una nueva contraseña"
+
+#: templates/registration/password_reset_confirm.html:13
+msgid "Save new password"
+msgstr "Guardar nueva contraseña"
+
+#: templates/registration/password_reset_confirm.html:16
+#: templates/registration/verify_email_invalid.html:4
+#: templates/registration/verify_email_invalid.html:8
+msgid "This link doesn't work"
+msgstr "Este enlace no funciona"
+
+#: templates/registration/password_reset_confirm.html:17
+msgid "It was already used or it expired (links last 1 hour)."
+msgstr "Ya se usó o expiró (los enlaces duran 1 hora)."
+
+#: templates/registration/password_reset_confirm.html:18
+msgid "Ask for a new link"
+msgstr "Pedir un enlace nuevo"
+
+#: templates/registration/password_reset_done.html:4
+#: templates/registration/password_reset_done.html:8
+msgid "Check your email"
+msgstr "Revisa tu correo"
+
+#: templates/registration/password_reset_done.html:10
+msgid ""
+"If an account uses that email, we've sent it a link to choose a new "
+"password. It expires in 1 hour."
+msgstr ""
+"Si hay una cuenta con ese correo, le enviamos un enlace para elegir una "
+"nueva contraseña. Expira en 1 hora."
+
+#: templates/registration/password_reset_done.html:11
+msgid "Didn't get it? Check your spam folder."
+msgstr "¿No te llegó? Revisa la carpeta de spam."
+
+#: templates/registration/password_reset_email.txt:3
+msgid ""
+"Someone asked to reset the password of your account. To choose a new one, "
+"open this link (it works once and for 1 hour):"
+msgstr ""
+"Alguien pidió restablecer la contraseña de tu cuenta. Para elegir una nueva,"
+" abre este enlace (funciona una sola vez y durante 1 hora):"
+
+#: templates/registration/password_reset_email.txt:7
+msgid "If it wasn't you, ignore this email: your password stays the same."
+msgstr "Si no fuiste tú, ignora este correo: tu contraseña sigue igual."
+
+#: templates/registration/password_reset_form.html:9
+msgid ""
+"Enter your account's email and we'll send you a link to choose a new "
+"password. The link works once and for 1 hour."
+msgstr ""
+"Escribe el correo de tu cuenta y te enviaremos un enlace para elegir una "
+"nueva contraseña. El enlace funciona una sola vez y durante 1 hora."
+
+#: templates/registration/password_reset_form.html:13
+msgid "Send the link"
+msgstr "Enviar el enlace"
+
+#: templates/registration/password_reset_form.html:15
+msgid "Back to log in"
+msgstr "Volver a iniciar sesión"
+
+#: templates/registration/password_reset_subject.txt:1
+msgid "Reset your password"
+msgstr "Restablece tu contraseña"
+
+#: templates/registration/profile.html:17
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: templates/registration/profile.html:22
+msgid "SMS"
+msgstr "SMS"
+
+#: templates/registration/profile.html:23
+msgid "Coming soon"
+msgstr "Próximamente"
+
+#: templates/registration/profile.html:28
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/registration/signup.html:8
+msgid "Create your account"
+msgstr "Crea tu cuenta"
+
+#: templates/registration/signup.html:21
+msgid "Already have an account?"
+msgstr "¿Ya tienes cuenta?"
+
+#: templates/registration/verify_email.txt:3
+msgid ""
+"To start booking, verify your email by opening this link (it works for 1 "
+"day):"
+msgstr ""
+"Para empezar a reservar, verifica tu correo abriendo este enlace (funciona "
+"durante 1 día):"
+
+#: templates/registration/verify_email.txt:7
+msgid "If you didn't create an account, ignore this email."
+msgstr "Si no creaste una cuenta, ignora este correo."
+
+#: templates/registration/verify_email_invalid.html:9
+msgid ""
+"It expired (links last 1 day), or it was sent to an email the account no "
+"longer uses."
+msgstr ""
+"Expiró (los enlaces duran 1 día) o se envió a un correo que la cuenta ya no "
+"usa."
+
+#: templates/registration/verify_email_invalid.html:10
+msgid "Log in and ask for a new link from the booking page."
+msgstr "Inicia sesión y pide un enlace nuevo desde la página de reservas."
+
+#, python-format
+#~ msgid "Welcome, %(name)s! Your account is ready."
+#~ msgstr "¡Bienvenido, %(name)s! Tu cuenta está lista."

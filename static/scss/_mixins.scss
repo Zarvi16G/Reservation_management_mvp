@@ -1,0 +1,36 @@
+// Small reusable pieces of the Marcador look.
+@use 'palette' as *;
+
+// Uppercase, spaced labels: column heads, pills, the clock.
+@mixin caps($size: 0.75rem) {
+  font-size: $size;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+// Times and amounts in monospace, so they line up in columns.
+@mixin numbers {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+@mixin focus-ring {
+  outline: 2px solid color('mark');
+  outline-offset: 2px;
+}
+
+// The amber stripe on the left of a booking, like a scoreboard row.
+@mixin stripe($colour: 'mark') {
+  box-shadow: inset 3px 0 0 color($colour);
+}
+
+@mixin button($bg, $fg, $hover, $border: $bg) {
+  border-color: color($border);
+  background: color($bg);
+  color: color($fg);
+
+  &:hover:not(:disabled) {
+    background: color($hover);
+  }
+}

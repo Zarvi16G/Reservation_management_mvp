@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Verify your email" %}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto w-full max-w-md">
+    <h1>{% translate "Verify your email" %}</h1>
+    <p class="mb-4">
+      {% blocktranslate with email=user.email %}To book, first open the link we sent to <strong>{{ email }}</strong>. This keeps bots and fake accounts out.{% endblocktranslate %}
+    </p>
+    <p class="muted mb-6">{% translate "Didn't get it? Check your spam folder, or ask for a new one." %}</p>
+    <form method="post" action="{% url 'resend_verification' %}" class="flex flex-wrap items-center justify-between gap-4">
+      {% csrf_token %}
+      <button type="submit">{% translate "Send the link again" %}</button>
+      <a href="{% url 'profile' %}">{% translate "Wrong email? Change it in your profile" %}</a>
+    </form>
+  </div>
+{% endblock %}

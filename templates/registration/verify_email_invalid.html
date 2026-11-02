@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "This link doesn't work" %}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto w-full max-w-md">
+    <h1>{% translate "This link doesn't work" %}</h1>
+    <p>{% translate "It expired (links last 1 day), or it was sent to an email the account no longer uses." %}</p>
+    <p class="mt-6">{% translate "Log in and ask for a new link from the booking page." %}</p>
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 100
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+# E/W: style, F: bugs (unused imports, undefined names), I: import order,
+# B: likely bugs, DJ: Django-specific rules, UP: modern Python syntax.
+select = ["E", "W", "F", "I", "B", "DJ", "UP"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.dev"
+python_files = ["tests.py", "test_*.py"]

@@ -1,0 +1,13 @@
+asgiref==3.13.0
+certifi==2026.10.23
+charset-normalizer==3.5.2
+django-anymail==15.2
+django-environ==0.14.0
+Django==6.1.2
+gunicorn==26.2.0
+idna==3.20
+mysqlclient==2.3.0
+pillow==13.0.0
+requests==2.34.2
+sqlparse==0.6.0
+urllib3==2.8.0

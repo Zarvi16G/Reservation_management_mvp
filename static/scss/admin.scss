@@ -1,0 +1,246 @@
+// The Django admin in the Marcador look. Built into static/css/admin.css:
+//
+//   ./bin/dart-sass/sass static/scss/admin.scss static/css/admin.css --style=compressed --no-source-map
+//
+// The admin's HTML is Django's, so it can't take classes. It is built on CSS
+// variables (--body-bg, --primary, --link-fg…): we point them at our palette,
+// then add the Marcador details. Loaded by templates/admin/base_site.html.
+@use 'tokens';
+@use 'palette' as *;
+@use 'mixins' as *;
+
+// html:root beats both the admin's light (:root) and dark ([data-theme]) blocks.
+html:root,
+html[data-theme='light'],
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --primary: #{color('band')};
+  --secondary: #{color('band')};
+  --accent: #{color('mark')};
+  --primary-fg: #{color('fg')};
+
+  --body-fg: #{color('fg')};
+  --body-bg: #{color('bg')};
+  --body-quiet-color: #{color('muted')};
+  --body-medium-color: #{color('muted')};
+  --body-loud-color: #{color('fg')};
+
+  --header-color: #{color('band-muted')};
+  --header-branding-color: #{color('band-fg')};
+  --header-bg: #{color('band')};
+  --header-link-color: #{color('band-fg')};
+
+  --breadcrumbs-fg: #{color('muted')};
+  --breadcrumbs-link-fg: #{color('fg')};
+  --breadcrumbs-bg: #{color('raised')};
+
+  --link-fg: #{color('key')};
+  --link-hover-color: #{color('fg')};
+  --link-selected-fg: #{color('mark')};
+
+  --hairline-color: #{color('line')};
+  --border-color: #{color('line-strong')};
+
+  --error-fg: #{color('error')};
+
+  --message-debug-bg: #{color('raised')};
+  --message-debug-icon: url(../admin/img/icon-debug-dark.svg);
+  --message-info-bg: #{color('raised')};
+  --message-info-icon: url(../admin/img/icon-info-dark.svg);
+  --message-success-bg: #15392f;
+  --message-success-icon: url(../admin/img/icon-yes-dark.svg);
+  --message-warning-bg: #3d2f12;
+  --message-warning-icon: url(../admin/img/icon-alert-dark.svg);
+  --message-error-bg: #3f1620;
+  --message-error-icon: url(../admin/img/icon-no-dark.svg);
+
+  --darkened-bg: #{color('surface')};
+  --selected-bg: #{color('raised')};
+  --selected-row: #{color('raised')};
+
+  --button-fg: #{color('fg')};
+  --button-bg: #{color('line-strong')};
+  --button-hover-bg: #{color('raised')};
+  --default-button-bg: #{color('accent')};
+  --default-button-hover-bg: #{color('accent-hover')};
+  --close-button-bg: #{color('line-strong')};
+  --close-button-hover-bg: #{color('raised')};
+  --delete-button-bg: #{color('danger')};
+  --delete-button-hover-bg: #a52f3f;
+
+  --object-tools-fg: #{color('accent-fg')};
+  --object-tools-bg: #{color('accent')};
+  --object-tools-hover-bg: #{color('accent-hover')};
+
+  --font-family-primary: var(--font-body);
+  --font-family-monospace: var(--font-num);
+}
+
+// One look only: the admin's light/dark switch would do nothing.
+.theme-toggle {
+  display: none;
+}
+
+// The scoreboard header.
+#header {
+  border-bottom: 3px solid color('mark');
+}
+
+#site-name a,
+#site-name a:link,
+#site-name a:visited {
+  color: color('band-fg');
+  font-weight: 800;
+  letter-spacing: -0.01em;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.5em;
+    border-radius: 3px;
+    background: color('mark');
+  }
+}
+
+#branding .clock {
+  margin-left: 1rem;
+  color: color('mark');
+
+  @include caps(0.8rem);
+  @include numbers;
+}
+
+// Section titles (dashboard, forms, inlines, filters): uppercase on a raised band.
+.module h2,
+.module caption,
+.inline-group h2,
+#changelist-filter h2 {
+  background: color('raised');
+  color: color('key');
+
+  @include caps(0.8rem);
+}
+
+// Soft corners on every box, button and field of the admin.
+.module,
+fieldset.module,
+.inline-group,
+#changelist-filter,
+#changelist .actions,
+#toolbar,
+.selector .selector-available,
+.selector .selector-chosen,
+.calendarbox,
+.clockbox,
+ul.messagelist li,
+.errornote,
+.paginator,
+.submit-row {
+  border-radius: $radius;
+}
+
+.module h2,
+.module caption,
+.inline-group h2,
+#changelist-filter h2,
+.selector h2 {
+  border-radius: $radius $radius 0 0;
+}
+
+.button,
+input[type='submit'],
+input[type='button'],
+button,
+a.button,
+.deletelink,
+.object-tools a,
+.submit-row a.closelink {
+  border-radius: $radius;
+}
+
+.object-tools a {
+  border-radius: $radius-pill;
+}
+
+#changelist-filter li.selected,
+#nav-sidebar .current-model {
+  border-radius: 0 $radius $radius 0;
+}
+
+// Table heads like the site's list heads.
+thead th,
+tfoot td {
+  background: color('raised');
+  color: color('muted');
+
+  @include caps(0.72rem);
+}
+
+// The model you are on, in the sidebar: amber stripe.
+#nav-sidebar .current-model {
+  @include stripe;
+}
+
+// "Save" is the main action; the default button colour has dark text.
+.button.default,
+input[type='submit'].default,
+.submit-row input.default,
+.object-tools a {
+  color: color('accent-fg');
+}
+
+// Login page: its only button is the main action.
+.login .submit-row input {
+  background: color('accent');
+  color: color('accent-fg');
+
+  &:hover {
+    background: color('accent-hover');
+  }
+}
+
+// Fields: dark like the site, with the amber focus ring.
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='url'],
+input[type='number'],
+input[type='tel'],
+input[type='search'],
+textarea,
+select,
+.vTextField {
+  border-color: color('line-strong');
+  border-radius: $radius;
+  background: color('surface');
+  color: color('fg');
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @include focus-ring;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: color('accent');
+}
+
+// Date and time fields line up.
+.vDateField,
+.vTimeField {
+  @include numbers;
+}
+
+.help,
+.help p,
+p.help,
+form .help,
+.timezonewarning,
+.datetimeshortcuts {
+  color: color('muted');
+}

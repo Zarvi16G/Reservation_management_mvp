@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <section class="py-10 text-center">
+    <h1>{% translate "Welcome" %}</h1>
+    <p class="mb-6">{% blocktranslate %}Book and manage your reservations.{% endblocktranslate %}</p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'book' %}">{% translate "Book a court" %}</a>
+    {% else %}
+      <p class="mb-4">{% translate "You need an account to book." %}</p>
+      <div class="flex justify-center gap-4">
+        <a href="{% url 'signup' %}">{% translate "Sign up" %}</a>
+        <a href="{% url 'login' %}">{% translate "Log in" %}</a>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% load i18n %}{% autoescape off %}{% blocktranslate with name=user.get_short_name|default:user.get_username %}Hi {{ name }},{% endblocktranslate %}
+
+{% translate "Your booking is confirmed:" %}
+
+{% include "emails/_bookings.txt" %}
+{% blocktranslate with amount=booking_request.amount_paid|floatformat:2 reference=booking_request.payment_reference %}Charged: {{ amount }} {{ currency }} · payment reference {{ reference }}{% endblocktranslate %}
+
+{% include "emails/_footer.txt" %}{% endautoescape %}

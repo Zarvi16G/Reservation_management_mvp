@@ -1,0 +1,6 @@
+{% load i18n %}{% autoescape off %}{% blocktranslate with name=user.get_short_name|default:user.get_username %}Hi {{ name }},{% endblocktranslate %}
+
+{% translate "This booking was cancelled and the time is free again:" %}
+
+{% include "emails/_bookings.txt" %}
+{% include "emails/_footer.txt" %}{% endautoescape %}

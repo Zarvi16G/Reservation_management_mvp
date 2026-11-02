@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% translate "Book" %}{% endblock %}
+
+{% block content %}
+  <h1>{% translate "Book a court" %}</h1>
+  <p class="mb-4">{% translate "Pick the free 1-hour slots you want, on one or several courts and days. Back-to-back slots become a single booking." %}</p>
+
+  {# Filter by type: a GET form, so the filter stays in the URL. #}
+  <form method="get" class="mb-4 flex flex-wrap items-center gap-2">
+    <label for="type">{% translate "Type" %}</label>
+    <select name="type" id="type" class="w-auto" onchange="this.form.submit()">
+      <option value="">{% translate "All" %}</option>
+      {% for resource_type in resource_types %}
+        <option value="{{ resource_type.pk }}"{% if selected_type == resource_type.pk|stringformat:"s" %} selected{% endif %}>{{ resource_type }}</option>
+      {% endfor %}
+    </select>
+    {% if can_book_for_customers %}
+      {# Keeps the chosen customer when the filter reloads the page (customer_search.js updates it). #}
+      <input type="hidden" name="customer" id="filter-customer" value="{{ selected_customer.pk|default:'' }}">
+    {% endif %}
+    <noscript><button type="submit">{% translate "Filter" %}</button></noscript>
+  </form>
+
+  <form method="post" action="{% url 'book_checkout' %}" id="slot-picker">
+    {% csrf_token %}
+
+    {% if can_book_for_customers %}
+      {# Staff only: book in a customer's name (e.g. a booking made by phone). #}
+      {# Search by email (unique), not by name (names repeat). See customer_search.js. #}
+      <div class="customer-search mb-6 max-w-md rounded-lg border border-line-strong p-4" data-url="{% url 'customer_search' %}">
+        <label for="customer-search" class="mb-1 block">{% translate "Book for customer" %}</label>
+        <input type="search" id="customer-search" autocomplete="off"
+               value="{{ selected_customer_label }}"
+               placeholder="{% translate 'Myself — or type the customer’s email' %}">
+        <input type="hidden" name="customer" id="customer" value="{{ selected_customer.pk|default:'' }}">
+        <ul id="customer-results" class="customer-results" hidden></ul>
+        <p id="customer-chosen" class="muted mt-2 text-sm"
+           data-myself="{% translate 'Booking for: myself' %}"
+           data-chosen="{% translate 'Booking for:' %}"
+           data-not-chosen="{% translate 'Choose a customer from the list, or clear the field to book for yourself.' %}"
+           data-no-results="{% translate 'No customer with that email.' %}">
+          {% if selected_customer %}{% translate "Booking for:" %} {{ selected_customer_label }}{% else %}{% translate "Booking for: myself" %}{% endif %}
+        </p>
+      </div>
+    {% endif %}
+
+    <div class="flex flex-col gap-6">
+      {% for day in days %}
+        <section>
+          <h2 class="border-b border-line pb-1">{{ day.date|date:"l j F" }}</h2>
+          <div class="flex flex-col gap-4">
+            {% for row in day.rows %}
+              <fieldset class="slot-row rounded-lg border border-line-strong p-4">
+                <legend class="px-1">{{ row.resource }} <small class="muted">· {{ row.resource.resource_type }}</small></legend>
+                <label class="mb-3 flex items-center gap-2">
+                  <input type="checkbox" data-select-all> {% translate "Select all" %}
+                </label>
+                {# 2 columns on phones, more as the screen grows. #}
+                <div class="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+                  {% for slot in row.slots %}
+                    <label class="slot flex cursor-pointer items-center justify-center gap-2 rounded-lg border px-2 py-2">
+                      <input type="checkbox" name="slot" value="{{ slot.value }}">
+                      {{ slot.start|time:"H:i" }}–{{ slot.end|time:"H:i" }}
+                    </label>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% empty %}
+              <p class="muted">{% translate "No free slots this day." %}</p>
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    </div>
+
+    {# The line stays here, under the days. Only the button floats at the bottom of the screen while scrolling (the transparent strip lets clicks through to the slots). #}
+    <div class="mt-6 border-t border-line"></div>
+    <div class="pointer-events-none sticky bottom-0 z-10 py-4">
+      <button type="submit" class="floating-action pointer-events-auto w-full sm:w-auto">{% translate "Continue to payment" %}</button>
+    </div>
+  </form>
+
+  {% if result %}
+    {# Result of the last payment, shown once as a pop-up (see slot_picker.js). #}
+    <dialog id="booking-result" class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-lg p-6 backdrop:bg-page/80" open>
+      {% if result.confirmed %}
+        <h2 class="mt-0">{% translate "Payment approved. Booking confirmed!" %}</h2>
+        <ul class="mb-4 flex flex-col gap-1">
+          {% for line in result.confirmed %}<li>✅ {{ line }}</li>{% endfor %}
+        </ul>
+        <p class="muted mb-4 text-sm">
+          {% blocktranslate with amount=result.amount|floatformat:2 currency=result.currency reference=result.reference %}Charged {{ amount }} {{ currency }} · reference {{ reference }}{% endblocktranslate %}
+        </p>
+      {% else %}
+        <h2 class="mt-0">{% translate "Nothing could be booked" %}</h2>
+        <p class="mb-4">{% translate "None of the selected slots is still available. Nothing was charged." %}</p>
+      {% endif %}
+
+      {% if result.omitted %}
+        <ul class="mb-4 flex flex-col gap-1">
+          {% for line in result.omitted %}
+            <li>⚠️ {{ line }}: {% translate "this booking is no longer available, so it was skipped." %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <form method="dialog" class="flex flex-wrap items-center justify-between gap-4">
+        <button type="submit">{% translate "Close" %}</button>
+        <a href="{% url 'my_bookings' %}">{% translate "See my bookings" %}</a>
+      </form>
+    </dialog>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/slot_picker.js' %}"></script>
+  {% if can_book_for_customers %}<script src="{% static 'js/customer_search.js' %}"></script>{% endif %}
+{% endblock %}

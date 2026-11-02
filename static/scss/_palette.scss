@@ -1,0 +1,49 @@
+// Proposal B "Marcador", dark version: navy and amber, like a stadium scoreboard.
+// The only place where colours, fonts and corners are chosen. Site and admin use it.
+//
+//   bg / surface / raised     navy backgrounds (page, cards, hover and table heads)
+//   band                      the header band, like the scoreboard itself
+//   accent                    buttons and selected slots
+//   key                       headings and links
+//   mark                      amber: the clock, stripes, focus and what is selected
+//   fg / muted                running text / small and secondary text
+
+$palette: (
+  'bg': #0b1020,
+  'surface': #121a33,
+  'raised': #1b2650,
+  'line': #26305a,
+  'line-strong': #34427c,
+
+  'fg': #e7eaf3,
+  'muted': #98a0bc,
+
+  'band': #16295f,
+  'band-fg': #e7eaf3,
+  'band-muted': #aab5d8,
+
+  'accent': #7f9cf0,
+  'accent-hover': #9bb2f4,
+  'accent-fg': #0b1020,
+
+  'key': #9bb2f4,
+  'mark': #f2b85b,
+
+  'ok': #7fd1a0,
+  'error': #f08a8a,
+  'danger': #c0394b,
+);
+
+$font-body: ('Archivo', ui-sans-serif, system-ui, sans-serif);
+$font-num: ('IBM Plex Mono', ui-monospace, monospace);
+
+// Soft corners everywhere (site and admin). Templates use Tailwind's
+// rounded-lg, which is the same 8px.
+$radius: 8px;
+$radius-pill: 999px;
+
+// color('mark') → var(--mark). Components read the CSS variables written by
+// _tokens.scss, so a colour is defined once.
+@function color($name) {
+  @return var(--#{$name});
+}

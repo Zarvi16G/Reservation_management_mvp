@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Sign up" %}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto w-full max-w-md">
+    <h1>{% translate "Create your account" %}</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      {% include "includes/form_fields.html" with form=form %}
+      {# Honeypot: off-screen and skipped by keyboard and screen readers, so only bots fill it. #}
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label>Website <input type="text" name="{{ honeypot_field }}" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <button type="submit">{% translate "Sign up" %}</button>
+    </form>
+
+    <p class="mt-6">
+      {% translate "Already have an account?" %}
+      <a href="{% url 'login' %}">{% translate "Log in" %}</a>
+    </p>
+  </div>
+{% endblock %}

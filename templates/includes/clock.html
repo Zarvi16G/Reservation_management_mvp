@@ -1,0 +1,5 @@
+{% load i18n tz %}{% get_current_timezone as TIME_ZONE %}
+{# Local time at the courts, kept running by static/js/clock.js. #}
+<span class="clock" data-clock data-tz="{{ TIME_ZONE }}" title="{% translate 'Local time at the courts' %}">
+  <span data-clock-city>{{ TIME_ZONE }}</span> <time data-clock-time>{% now "H:i" %}</time>
+</span>

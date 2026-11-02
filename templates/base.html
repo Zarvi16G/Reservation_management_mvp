@@ -1,0 +1,97 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% translate "Reservation Management" %}{% endblock %}</title>
+  {# Layout: built by the Tailwind CLI from static/src/input.css (see README). #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {# The design, in SCSS (static/scss/site.scss → css/site.css). #}
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="flex min-h-screen flex-col">
+  <header class="site-header relative">
+    <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <a href="{% url 'home' %}" class="brand">{% translate "Reservation Management" %}</a>
+        {% include "includes/clock.html" %}
+      </div>
+
+      {# Phones: the menu is hidden behind this button (static/js/nav.js). #}
+      <button type="button" class="md:hidden" data-nav-toggle aria-controls="main-nav" aria-expanded="false">
+        <span aria-hidden="true">☰</span>
+        <span class="sr-only">{% translate "Menu" %}</span>
+      </button>
+
+      {# Without JavaScript the menu is always open; nav.js closes it on phones. #}
+      <nav id="main-nav" class="absolute inset-x-0 top-full z-10 border-b border-line bg-band px-4 py-3 md:static md:border-0 md:p-0" data-nav>
+        <ul class="flex flex-col gap-3 md:flex-row md:items-center md:gap-5">
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'book' %}"{% if request.resolver_match.url_name == 'book' %} aria-current="page"{% endif %}>{% translate "Book" %}</a></li>
+            <li><a href="{% url 'my_bookings' %}"{% if request.resolver_match.url_name == 'my_bookings' %} aria-current="page"{% endif %}>{% translate "My bookings" %}</a></li>
+            <li><a href="{% url 'profile' %}"{% if request.resolver_match.url_name == 'profile' %} aria-current="page"{% endif %}>{% translate "Profile" %}</a></li>
+            {% if user.is_staff %}
+              <li><a href="{% url 'admin:index' %}">{% translate "Admin" %}</a></li>
+            {% endif %}
+            <li>
+              {# Logout must be a POST (with CSRF), not a plain link. #}
+              <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">{% translate "Log out" %}</button>
+              </form>
+            </li>
+          {% else %}
+            <li><a href="{% url 'login' %}">{% translate "Log in" %}</a></li>
+            <li><a href="{% url 'signup' %}">{% translate "Sign up" %}</a></li>
+          {% endif %}
+          <li>
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ redirect_to }}">
+              <label for="language" class="sr-only">{% translate "Language" %}</label>
+              <select name="language" id="language" class="w-auto" onchange="this.form.submit()">
+                {% get_available_languages as LANGUAGES %}
+                {% for code, name in LANGUAGES %}
+                  <option value="{{ code }}"{% if code == LANGUAGE_CODE %} selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+              <noscript><button type="submit">{% translate "Change" %}</button></noscript>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {% if messages %}
+    <ul class="mx-auto mt-4 flex w-full max-w-5xl flex-col gap-2 px-4" data-close-label="{% translate 'Close' %}">
+      {% for message in messages %}
+        {# The ✕ button is added by static/js/messages.js. #}
+        <li class="flex items-start justify-between gap-4 rounded-lg border border-line-strong px-4 py-3 {{ message.tags }}" data-message>
+          <span>{{ message }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-5xl px-4 py-4 text-sm text-quiet">
+      {% translate "Reservation Management — demo project" %}
+    </div>
+  </footer>
+
+  <script src="{% static 'js/nav.js' %}"></script>
+  <script src="{% static 'js/messages.js' %}"></script>
+  <script src="{% static 'js/clock.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

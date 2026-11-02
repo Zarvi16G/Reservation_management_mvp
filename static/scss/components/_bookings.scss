@@ -1,0 +1,54 @@
+// "My bookings": rows with the amber stripe, times in monospace, status pills.
+@use '../palette' as *;
+@use '../mixins' as *;
+
+.booking-row {
+  @include stripe;
+
+  &.is-past {
+    @include stripe('line-strong');
+
+    color: color('muted');
+  }
+}
+
+.list-head {
+  color: color('muted');
+
+  @include caps;
+}
+
+.time {
+  @include numbers;
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: $radius-pill;
+  background: color('raised');
+  color: color('fg');
+
+  @include caps(0.7rem);
+
+  &.is-cancelled {
+    border: 1px solid color('line-strong');
+    background: transparent;
+    color: color('muted');
+  }
+}
+
+// Secondary actions (Reschedule, Cancel, Close): outlined, not filled.
+.btn-ghost {
+  display: inline-block;
+  border: 1px solid color('line-strong');
+  border-radius: $radius;
+  font-weight: 600;
+  text-decoration: none;
+
+  @include button('surface', 'fg', 'raised', 'line-strong');
+
+  &:hover {
+    color: color('fg');
+  }
+}

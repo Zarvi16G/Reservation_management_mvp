@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Profile" %}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto w-full max-w-md">
+    <h1>{% translate "Profile" %}</h1>
+    <p class="muted mb-6">{{ user.username }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      {% include "includes/form_fields.html" with form=form %}
+
+      {# Planned, not built: shown so the idea is visible. See README > Roadmap. #}
+      <fieldset class="mb-6 rounded-lg border border-line-strong p-4" disabled>
+        <legend class="px-1">{% translate "Notifications" %}</legend>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" checked> {% translate "Email" %}
+        </label>
+        <label class="mt-2 flex items-center gap-2">
+          <input type="checkbox"> {% translate "SMS" %}
+          <span class="rounded-lg border border-line-strong px-2 text-sm">{% translate "Coming soon" %}</span>
+        </label>
+      </fieldset>
+
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <button type="submit">{% translate "Save" %}</button>
+        <a href="{% url 'password_change' %}">{% translate "Change password" %}</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

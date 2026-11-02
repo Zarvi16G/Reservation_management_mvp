@@ -1,0 +1,21 @@
+// The design of the customer site. Built into static/css/site.css:
+//
+//   ./bin/dart-sass/sass static/scss/site.scss static/css/site.css --watch                 (develop)
+//   ./bin/dart-sass/sass static/scss/site.scss static/css/site.css --style=compressed --no-source-map  (deploy)
+//
+// Loaded after Tailwind's main.css. Everything goes into Tailwind's own
+// layers (base, components), so Tailwind's layout classes in the templates
+// still win when both set the same property.
+@use 'sass:meta';
+@use 'tokens';
+
+@layer base {
+  @include meta.load-css('base');
+}
+
+@layer components {
+  @include meta.load-css('components/header');
+  @include meta.load-css('components/slots');
+  @include meta.load-css('components/bookings');
+  @include meta.load-css('components/feedback');
+}

@@ -1,0 +1,15 @@
+// Writes the palette as CSS variables (--bg, --mark…). Tailwind's colour
+// classes (border-line, bg-surface…) point at them too (static/src/input.css).
+@use 'sass:meta';
+@use 'palette' as *;
+
+:root {
+  color-scheme: dark; // Native controls and scrollbars follow the dark theme.
+
+  @each $name, $value in $palette {
+    --#{$name}: #{$value};
+  }
+
+  --font-body: #{meta.inspect($font-body)};
+  --font-num: #{meta.inspect($font-num)};
+}

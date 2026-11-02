@@ -1,0 +1,96 @@
+// Messages, the payment status and the customer search results.
+@use '../palette' as *;
+@use '../mixins' as *;
+
+.muted {
+  color: color('muted');
+}
+
+[data-message] {
+  border-color: color('line-strong');
+  border-radius: $radius;
+  background: color('surface');
+
+  @include stripe('accent');
+
+  &.success {
+    @include stripe('ok');
+  }
+
+  &.error {
+    @include stripe('error');
+  }
+
+  &.warning {
+    @include stripe('mark');
+  }
+
+  // The ✕ added by messages.js.
+  button {
+    background: transparent;
+    color: color('muted');
+
+    &:hover:not(:disabled) {
+      background: transparent;
+      color: color('fg');
+    }
+  }
+}
+
+.notice {
+  border-color: color('line-strong');
+  border-radius: $radius;
+  background: color('surface');
+
+  @include stripe;
+}
+
+#payment-status {
+  &.processing {
+    color: color('muted');
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  &.approved {
+    color: color('ok');
+    font-weight: 600;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #payment-status.processing {
+    animation: none;
+  }
+}
+
+.customer-results {
+  border-color: color('line-strong');
+  border-radius: $radius;
+  overflow: hidden;
+  background: color('surface');
+
+  button {
+    background: transparent;
+    color: color('fg');
+    font-weight: 400;
+
+    &:hover:not(:disabled) {
+      background: color('raised');
+    }
+  }
+}
+
+// The "Continue to payment" button floats over the days while scrolling.
+.floating-action {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+}
+
+.price {
+  @include numbers;
+}

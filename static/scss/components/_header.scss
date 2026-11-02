@@ -1,0 +1,61 @@
+// The header is the scoreboard: navy band, amber line and the local clock.
+@use '../palette' as *;
+@use '../mixins' as *;
+
+.site-header {
+  border-bottom: 3px solid color('mark');
+  background: color('band');
+  color: color('band-fg');
+
+  a {
+    color: color('band-muted');
+    text-decoration: none;
+
+    &:hover,
+    &[aria-current='page'] {
+      color: color('band-fg');
+    }
+
+    &[aria-current='page'] {
+      box-shadow: inset 0 -2px 0 color('mark');
+    }
+  }
+
+  // Quiet controls on the band: log out, language, menu button.
+  button,
+  select {
+    border-radius: $radius;
+
+    @include button('band', 'band-fg', 'raised', 'band-muted');
+  }
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+
+  // The amber square of the scoreboard.
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.5em;
+    border-radius: 3px;
+    background: color('mark');
+  }
+
+  .site-header &,
+  .site-header &:hover {
+    color: color('band-fg');
+  }
+}
+
+.clock {
+  color: color('mark');
+  white-space: nowrap;
+
+  @include caps(0.8rem);
+  @include numbers;
+}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "My bookings" %}{% endblock %}
+
+{% block content %}
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="mb-0">{% translate "My bookings" %}</h1>
+    <a href="{% url 'book' %}">{% translate "Book a court" %}</a>
+  </div>
+
+  <h2>{% translate "Upcoming" %}</h2>
+  {% if upcoming %}
+    {# Phones: one card per booking. Desktop (md+): a row per booking, like a table. #}
+    <div class="list-head hidden grid-cols-[2fr_2fr_1fr_auto] gap-4 border-b border-line px-4 pb-2 md:grid">
+      <span>{% translate "Court" %}</span>
+      <span>{% translate "Day" %}</span>
+      <span>{% translate "Time" %}</span>
+      <span></span>
+    </div>
+    <ul class="flex flex-col gap-3 md:gap-0">
+      {% for booking in upcoming %}
+        <li class="booking-row grid gap-2 rounded-lg border border-line-strong p-4 md:grid-cols-[2fr_2fr_1fr_auto] md:items-center md:gap-4 md:rounded-none md:border-0 md:border-b md:py-3">
+          <strong>{{ booking.resource }}</strong>
+          <span>{{ booking.start|date:"l j F" }}</span>
+          <span class="time">{{ booking.start|time:"H:i" }}–{{ booking.end|time:"H:i" }}</span>
+          <div class="flex items-center gap-2">
+            <a href="{% url 'reschedule_booking' booking.pk %}" class="btn-ghost px-3 py-1.5 text-sm">{% translate "Reschedule" %}</a>
+            {# Cancelling changes data, so it's a POST with CSRF, never a link. #}
+            <form method="post" action="{% url 'cancel_booking' booking.pk %}"
+                  onsubmit="return confirm(this.dataset.question)"
+                  data-question="{% translate 'Cancel this booking?' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn-ghost px-3 py-1.5 text-sm">{% translate "Cancel" %}</button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">{% translate "You have no upcoming bookings." %}</p>
+  {% endif %}
+
+  <h2>{% translate "History" %}</h2>
+  {% if history %}
+    <ul class="flex flex-col">
+      {% for booking in history %}
+        <li class="booking-row is-past grid gap-1 border-b border-line px-4 py-3 md:grid-cols-[2fr_2fr_1fr_auto] md:gap-4">
+          <span>{{ booking.resource }}</span>
+          <span>{{ booking.start|date:"l j F Y" }}</span>
+          <span class="time">{{ booking.start|time:"H:i" }}–{{ booking.end|time:"H:i" }}</span>
+          <span><span class="pill is-{{ booking.status }}">{{ booking.get_status_display }}</span></span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">{% translate "No past or cancelled bookings." %}</p>
+  {% endif %}
+{% endblock %}

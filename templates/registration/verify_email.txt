@@ -1,0 +1,8 @@
+{% load i18n %}{% autoescape off %}{% blocktranslate with name=user.get_short_name|default:user.get_username %}Hi {{ name }},{% endblocktranslate %}
+
+{% translate "To start booking, verify your email by opening this link (it works for 1 day):" %}
+
+{{ link }}
+
+{% translate "If you didn't create an account, ignore this email." %}
+{% endautoescape %}

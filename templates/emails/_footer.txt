@@ -1,0 +1,3 @@
+{% load i18n %}{% translate "See and manage your bookings:" %} {{ my_bookings_url }}
+
+{% translate "Reservation Management" %}

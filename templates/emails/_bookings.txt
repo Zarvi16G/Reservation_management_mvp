@@ -1,0 +1,2 @@
+{% for booking in bookings %}  • {{ booking.resource }} — {{ booking.start|date:"l j F" }}, {{ booking.start|time:"H:i" }}–{{ booking.end|time:"H:i" }}
+{% endfor %}
