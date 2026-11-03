@@ -4,7 +4,7 @@ Sistema web para **reservar instalaciones deportivas** (pistas, canchas y salas)
 
 Los clientes (con cuenta) eligen bloques de 1 hora libres en una cuadrícula, pagan un cobro de garantía de prueba y los reservan en una sola solicitud, que se confirma con un único email de resumen. Desde "Mis reservas" cancelan o reprograman sus reservas. Los empleados (gestores) administran pistas y horarios desde el admin de Django.
 
-> **Estado:** el backend está terminado: modelos y reglas, pago de prueba, emails reales con Brevo, permisos, registro y login, páginas de reserva y "Mis reservas", perfil y recuperación de contraseña, traducciones es/en, layout con Tailwind y diseño "Marcador" en SCSS (sitio y admin), límites contra bots, verificación del email y tests. Faltan pulir el diseño visual y el despliegue (ver [Hoja de ruta](#hoja-de-ruta)).
+> **Estado:** el backend está terminado: modelos y reglas, pago de prueba, emails reales con Brevo, permisos, registro y login, páginas de reserva y "Mis reservas", perfil y recuperación de contraseña, traducciones es/en, layout con Tailwind y diseño "Marcador" en SCSS (sitio y admin), límites contra bots, verificación del email y tests. Solo falta el despliegue (ver [Hoja de ruta](#hoja-de-ruta)).
 
 ---
 
@@ -24,6 +24,7 @@ Los clientes (con cuenta) eligen bloques de 1 hora libres en una cuadrícula, pa
 - [Idiomas](#idiomas)
 - [Frontend: Tailwind + SCSS](#frontend-tailwind--scss)
 - [Tests](#tests)
+- [Despliegue (Docker)](#despliegue-docker)
 - [Decisiones de diseño](#decisiones-de-diseño)
 - [Hoja de ruta](#hoja-de-ruta)
 
@@ -160,13 +161,16 @@ reservation_managment/
 │   │   ├── components/             #   header, slots, bookings, feedback
 │   │   ├── site.scss               #   → css/site.css
 │   │   └── admin.scss              #   → css/admin.css
-│   ├── css/                        # main.css (Tailwind), site.css y admin.css (Sass). Generados: no editar
+│   ├── css/                        # main.css (Tailwind), site.css y admin.css (Sass). Generados y minificados: no editar
+│   ├── img/tennis-ball-favicon.svg # Favicon (sitio y admin)
 │   └── js/                         # nav, messages, slot_picker, checkout, customer_search, clock
 ├── bin/                            # tailwindcss y dart-sass/ (descargados, fuera de git)
 ├── media/                          # Archivos subidos (imágenes de pistas)
-├── locale/                         # Traducciones: django.po (fuente) y django.mo (compilado)
+├── locale/es/                      # Traducción al español: django.po (fuente) y django.mo (compilado)
 │
-├── docker-compose.yml              # MySQL 8.4
+├── docker-compose.yml              # MySQL 8.4 para desarrollo
+├── Dockerfile, .dockerignore       # Imagen de producción (Django + Gunicorn)
+├── deploy/                         # Producción: compose, scripts de despliegue y Nginx
 ├── pyproject.toml                  # Configuración de pytest y Ruff
 ├── requirements.txt                # Dependencias de producción
 ├── requirements-dev.txt            # + herramientas de desarrollo
@@ -427,13 +431,13 @@ El sitio funciona en **español e inglés**:
 - URLs con prefijo (`/es/…`, `/en/…`) y un selector de idioma en la cabecera.
 - En el código, los textos están en inglés y marcados con `gettext_lazy` / `{% translate %}`.
 - **Español: 100 % traducido** (páginas, errores de las reglas, nombres en el admin, emails y textos del JavaScript). Los textos de Django (admin, formularios de contraseña) ya vienen traducidos por Django.
-- El `.po` de inglés queda vacío: los textos originales ya están en inglés.
+- No hay `.po` de inglés: los textos originales ya están en inglés, así que `/en/` los muestra tal cual.
 - Los textos que muestra el **JavaScript** vienen de atributos `data-*` en los templates, así que se traducen como el resto.
 - Los números y las fechas siguen el idioma: en español el precio es `1,00 USD` y los días, "Lunes 2 noviembre".
 
 Al agregar o cambiar textos:
 ```bash
-python manage.py makemessages -l es -l en --ignore=.venv --ignore=bin --ignore=static
+python manage.py makemessages -l es --ignore=.venv --ignore=bin --ignore=static
 # traducir los msgstr nuevos en locale/es/LC_MESSAGES/django.po
 python manage.py compilemessages --ignore=.venv
 ```
@@ -497,7 +501,7 @@ curl -sSL https://github.com/sass/dart-sass/releases/download/1.105.2/dart-sass-
 ```
 
 - Se editan `static/src/` y `static/scss/`, **nunca** los archivos de `static/css/`.
-- Los CSS generados sí van en git, para que el proyecto funcione sin compilar nada.
+- Los CSS generados sí van en git, **minificados** (comandos de producción), para que el proyecto funcione sin compilar nada. Las fuentes (`static/src/`, `static/scss/`) también van, para seguir editando el diseño.
 - **Sin JavaScript todo funciona**: el menú queda abierto, los bloques se marcan uno por uno, el pop-up se ve igual, el pago se envía directamente y el reloj muestra la hora a la que cargó la página.
 
 | Página | Layout |
@@ -537,6 +541,43 @@ Los fixtures compartidos (`user`, `resource`, `at`, `make_booking`, `make_resour
 ```bash
 ruff check .              # buscar problemas
 ruff format .             # dar formato
+```
+
+---
+
+## Despliegue (Docker)
+
+Producción en un VPS Ubuntu 26.04 en **`vps.santiagoboada.dev`**. Cada proyecto del servidor es un **stack de Docker Compose aislado**: su propia red, su base de datos y sus volúmenes. Un solo **Nginx** en el servidor recibe el tráfico y gestiona el SSL de todos los dominios.
+
+```
+Internet → Nginx (80/443, SSL con certbot)
+             ├─ /static/, /media/  → archivos en /srv/reservas/ (los sirve Nginx)
+             └─ /                  → 127.0.0.1:8001 → contenedor web (Gunicorn) → contenedor db (MySQL, sin puertos)
+```
+
+| Archivo | En el servidor | Qué es |
+|---|---|---|
+| `Dockerfile` | Se construye desde `/srv/reservas/app/` | Imagen en dos etapas: compila `mysqlclient` y luego copia solo el resultado. Corre como usuario `app` (uid 10001), nunca como root |
+| `deploy/docker-compose.prod.yml` | `/srv/reservas/docker-compose.yml` (root) | `web` + `db`. El puerto solo en `127.0.0.1` (Docker se salta el firewall); MySQL sin puertos; límites de memoria |
+| `deploy/post-deploy.sh` | `/srv/reservas/post-deploy.sh` (root) | `migrate`, `createcachetable`, `collectstatic`, `check --deploy` |
+| `deploy/deploy-project` | `/usr/local/sbin/deploy-project` (root) | Reconstruye y reinicia un proyecto. Es **lo único** que `deploy` puede ejecutar con `sudo` |
+| `deploy/nginx/vps.santiagoboada.dev.conf` | `/etc/nginx/sites-available/` | Proxy hacia Gunicorn + archivos estáticos. Certbot le añade HTTPS |
+
+**Usuarios del servidor (mínimo privilegio):**
+| Usuario | SSH | Permisos |
+|---|---|---|
+| `root` | ❌ | Solo con `sudo -i` desde `zarvi`, o por la consola de GoDaddy |
+| `zarvi` | Llave propia | Administración con `sudo` |
+| `deploy` | Llave propia (otra) | Sube el código a `/srv/reservas/app/` y ejecuta `sudo deploy-project reservas`. **Sin sudo general y fuera del grupo `docker`** (estar en ese grupo equivale a ser root). No puede leer el `.env` ni cambiar el compose, que son de root |
+
+**Seguridad del servidor:** SSH solo con llave (sin contraseñas, sin root, solo `zarvi` y `deploy`), firewall `ufw` con 22 (con límite de intentos), 80, 443 y 2224 (agente de GoDaddy), y actualizaciones de seguridad automáticas.
+
+**Qué no va en git y se copia a mano:** el `.env` de producción (`/srv/reservas/.env`, root 600) y las fotos de las canchas (`/srv/reservas/media/`).
+
+**Desplegar una nueva versión:**
+```bash
+rsync -az --delete --exclude-from=deploy/rsync-exclude ./ deploy@vps.santiagoboada.dev:/srv/reservas/app/
+ssh deploy@vps.santiagoboada.dev sudo deploy-project reservas
 ```
 
 ---
@@ -584,6 +625,7 @@ ruff format .             # dar formato
 - [x] **Diseño "Marcador"** en SCSS (azul marino y ámbar), en el sitio y en el admin
 - [x] **Límites contra bots y spam** (por IP y por cuenta), campo trampa y verificación del email al registrarse
 - [x] Email obligatorio y único en todo el sistema (también en **Users → Add** del admin)
-- [ ] **Deploy** en un droplet de DigitalOcean: MySQL, Nginx, Gunicorn, SSL
+- [x] **Servidor preparado:** SSH solo con llave, firewall, usuarios `zarvi`/`deploy`, Docker, Nginx, certbot
+- [ ] **Deploy** en el VPS con Docker: `vps.santiagoboada.dev`, SSL, Brevo de producción
 - [ ] **Pago real:** cambiar `payments.charge()` por una pasarela (p. ej. Stripe)
 - [ ] **SMS (próximamente):** solo planteado, no se construirá por ahora

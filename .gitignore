@@ -1,12 +1,39 @@
-.venv/
-__pycache__/
-*.pyc
+# --- Secrets: never public ---------------------------------------------------
+# Each machine has its own .env (copied by hand to the server). Only the
+# example, with placeholder values, goes to git.
 .env
-db.sqlite3
-/staticfiles/
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+id_*
+*.sqlite3
+*.sql
+*.sql.gz
+*.dump
+
+# --- User uploads (photos of the courts): stay on each server -----------------
 /media/*
 !/media/.gitkeep
+
+# --- Generated -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+/staticfiles/
 .pytest_cache/
 .ruff_cache/
-# Tailwind standalone CLI (downloaded, ~110 MB; see README)
+.coverage
+htmlcov/
+*.log
+
+# Tailwind and Dart Sass standalone executables (downloaded; see README > Frontend)
 /bin/
+
+# --- Local environment and editors ---------------------------------------------
+.venv/
+venv/
+.idea/
+.vscode/
+*.swp
+.DS_Store

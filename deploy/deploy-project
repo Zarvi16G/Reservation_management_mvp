@@ -1,0 +1,42 @@
+#!/bin/bash
+# Installed on the VPS as /usr/local/sbin/deploy-project (root:root 755).
+# The `deploy` user may run ONLY this with sudo (see /etc/sudoers.d/deploy):
+#
+#   sudo deploy-project reservas
+#
+# It rebuilds and restarts one project's stack from /srv/<project>/, then runs
+# that project's post-deploy steps. `deploy` is not in the docker group
+# (that would be root), so this script is its only way to touch Docker.
+set -euo pipefail
+
+project="${1:-}"
+if [[ ! "$project" =~ ^[a-z0-9-]+$ ]]; then
+    echo "usage: sudo deploy-project <project>" >&2
+    exit 2
+fi
+
+dir="/srv/$project"
+if [[ ! -f "$dir/docker-compose.yml" ]]; then
+    echo "No project at $dir" >&2
+    exit 2
+fi
+
+# Files root runs must belong to root and be writable by nobody else.
+for file in "$dir/docker-compose.yml" "$dir/post-deploy.sh"; do
+    [[ -e "$file" ]] || continue
+    if [[ "$(stat -c %U "$file")" != root ]] || [[ -n "$(find "$file" -perm /022)" ]]; then
+        echo "Refusing: $file must be owned by root and not writable by others" >&2
+        exit 1
+    fi
+done
+
+cd "$dir"
+docker compose build --pull
+docker compose up -d --remove-orphans
+
+if [[ -x "$dir/post-deploy.sh" ]]; then
+    "$dir/post-deploy.sh"
+fi
+
+docker image prune -f >/dev/null
+docker compose ps

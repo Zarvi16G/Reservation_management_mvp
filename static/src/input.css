@@ -13,13 +13,11 @@
 
 /*
  * Palette names for the few colour classes in templates (border-line,
- * bg-surface, bg-band…). The colours are defined in static/scss/_palette.scss
+ * bg-band, text-quiet…). The colours are defined in static/scss/_palette.scss
  * as CSS variables; `inline` makes these classes just point at them.
  */
 @theme inline {
   --color-page: var(--bg);
-  --color-surface: var(--surface);
-  --color-raised: var(--raised);
   --color-band: var(--band);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);

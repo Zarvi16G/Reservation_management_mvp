@@ -1,0 +1,21 @@
+# Only the code goes into the image: no secrets, uploads, local tools or caches.
+.env
+.env.*
+!.env.example
+.git/
+.venv/
+venv/
+bin/
+media/
+staticfiles/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+reservation_managment/tests/
+static/src/
+static/scss/
+deploy/
+docker-compose.yml
+Dockerfile
+.dockerignore
+*.md

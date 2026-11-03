@@ -12,7 +12,7 @@ INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 INTERNAL_IPS = ['127.0.0.1']
 
-# Show this app's INFO logs (e.g. the dummy emails) in the runserver console.
+# Show this app's INFO logs (e.g. the dummy payments) in the runserver console.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

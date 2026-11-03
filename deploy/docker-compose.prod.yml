@@ -1,0 +1,59 @@
+# Production stack of this project on the VPS: web (Django + Gunicorn) + db (MySQL).
+#
+# On the server it is copied to /srv/reservas/docker-compose.yml, owned by root,
+# so the `deploy` user can update the code but can't change what Docker runs
+# (a compose file can mount any host folder: being able to edit it = root).
+#
+# /srv/reservas/
+#   docker-compose.yml   this file          root:root 644
+#   .env                 production secrets root:root 600
+#   app/                 the code           deploy:deploy
+#   staticfiles/ media/  served by Nginx    uid 10001 (the container's `app` user)
+
+name: reservas
+
+services:
+  web:
+    build: ./app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: '3306'
+    # Only reachable from the server itself (Nginx). Docker ignores ufw for
+    # published ports, so never publish on 0.0.0.0.
+    ports:
+      - '127.0.0.1:8001:8000'
+    volumes:
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 768m
+    security_opt:
+      - no-new-privileges:true
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # No ports: only `web` reaches it, through this stack's private network.
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root -p"$$MYSQL_ROOT_PASSWORD" --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    mem_limit: 768m
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  mysql_data:

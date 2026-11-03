@@ -477,7 +477,7 @@ class Booking(models.Model):
         start = timezone.localtime(self.start)
         return f'{self.resource} · {start:%Y-%m-%d %H:%M} ({self.user})'
 
-    def save(self, *args, notify=True, **kwargs):
+    def save(self, *args, **kwargs):
         with transaction.atomic():
             # Lock the resource row so two people booking the same resource at
             # the same moment are validated one after the other, never both at once.
@@ -489,7 +489,7 @@ class Booking(models.Model):
             kind = self._notification_kind(saved)
             # A new booking inside a request is announced by the request's summary email.
             in_request_summary = saved is None and self.booking_request_id
-            if kind and notify and not in_request_summary:
+            if kind and not in_request_summary:
                 notification = Notification.objects.create(user=self.user, booking=self, kind=kind)
                 # Email only once the booking is really in the database. If the
                 # transaction fails, no email is sent; if the email fails, the booking stays.
