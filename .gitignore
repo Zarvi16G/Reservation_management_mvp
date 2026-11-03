@@ -27,10 +27,12 @@ __pycache__/
 htmlcov/
 *.log
 
-# Tailwind and Dart Sass standalone executables (downloaded; see README > Frontend)
+# Tailwind and Dart Sass standalone executables (downloaded separately, not in git)
 /bin/
 
 # --- Local environment and editors ---------------------------------------------
+# Personal, detailed notes of the project (the public one is README.md).
+.readme.md
 .venv/
 venv/
 .idea/

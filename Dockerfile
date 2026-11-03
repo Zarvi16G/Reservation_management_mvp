@@ -29,7 +29,7 @@ COPY --from=build /wheels /wheels
 RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
 
 # The app never runs as root. A fixed uid, so the server can give it the
-# staticfiles/ and media/ folders (see deploy/README.md).
+# staticfiles/ and media/ folders (see deploy/docker-compose.prod.yml).
 RUN useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin app
 
 WORKDIR /app
