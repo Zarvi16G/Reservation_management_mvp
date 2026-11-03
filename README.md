@@ -561,23 +561,29 @@ Internet → Nginx (80/443, SSL con certbot)
 | `deploy/docker-compose.prod.yml` | `/srv/reservas/docker-compose.yml` (root) | `web` + `db`. El puerto solo en `127.0.0.1` (Docker se salta el firewall); MySQL sin puertos; límites de memoria |
 | `deploy/post-deploy.sh` | `/srv/reservas/post-deploy.sh` (root) | `migrate`, `createcachetable`, `collectstatic`, `check --deploy` |
 | `deploy/deploy-project` | `/usr/local/sbin/deploy-project` (root) | Reconstruye y reinicia un proyecto. Es **lo único** que `deploy` puede ejecutar con `sudo` |
-| `deploy/nginx/vps.santiagoboada.dev.conf` | `/etc/nginx/sites-available/` | Proxy hacia Gunicorn + archivos estáticos. Certbot le añade HTTPS |
+| `deploy/nginx/vps.santiagoboada.dev.conf` | `/etc/nginx/sites-available/` | HTTPS con el wildcard, redirección desde HTTP, proxy hacia Gunicorn y archivos estáticos |
+| `deploy/nginx/00-default.conf` | `/etc/nginx/sites-available/00-default` | Cualquier otro nombre (la IP sola, escáneres) no recibe respuesta |
+| `deploy/nginx/cloudflare-realip.sh` | `/usr/local/sbin/cloudflare-realip` + cron mensual | Detrás del proxy de Cloudflare, Nginx toma la **IP real** del visitante de `CF-Connecting-IP`, confiando solo en los rangos de Cloudflare (los límites contra bots dependen de ella) |
 
 **Usuarios del servidor (mínimo privilegio):**
 | Usuario | SSH | Permisos |
 |---|---|---|
 | `root` | ❌ | Solo con `sudo -i` desde `zarvi`, o por la consola de GoDaddy |
 | `zarvi` | Llave propia | Administración con `sudo` |
-| `deploy` | Llave propia (otra) | Sube el código a `/srv/reservas/app/` y ejecuta `sudo deploy-project reservas`. **Sin sudo general y fuera del grupo `docker`** (estar en ese grupo equivale a ser root). No puede leer el `.env` ni cambiar el compose, que son de root |
+| `deploy` | Llave propia (otra) | Actualiza el código en `/srv/reservas/app/` (`git pull`) y ejecuta `sudo deploy-project reservas`. **Sin sudo general y fuera del grupo `docker`** (estar en ese grupo equivale a ser root). No puede leer el `.env` ni cambiar el compose, que son de root |
 
 **Seguridad del servidor:** SSH solo con llave (sin contraseñas, sin root, solo `zarvi` y `deploy`), firewall `ufw` con 22 (con límite de intentos), 80, 443 y 2224 (agente de GoDaddy), y actualizaciones de seguridad automáticas.
 
-**Qué no va en git y se copia a mano:** el `.env` de producción (`/srv/reservas/.env`, root 600) y las fotos de las canchas (`/srv/reservas/media/`).
+**Certificado:** wildcard `*.santiagoboada.dev` de GoDaddy, pedido con **certbot por ACME** y validado por DNS en Cloudflare (`/root/.secrets/cloudflare.ini`, token limitado a la zona y a la IP del servidor). Se renueva solo (`certbot.timer`) y recarga Nginx. Cloudflare en modo **Full (strict)**.
 
-**Desplegar una nueva versión:**
+**Qué no va en git:** el `.env` de producción (`/srv/reservas/.env`, root 600, secretos generados en el servidor) y las fotos de las canchas (`/srv/reservas/media/`, se suben desde el admin).
+
+**Desplegar una nueva versión** (desde git: solo se despliega lo que está en un commit, y `git log` dice qué versión corre):
 ```bash
-rsync -az --delete --exclude-from=deploy/rsync-exclude ./ deploy@vps.santiagoboada.dev:/srv/reservas/app/
-ssh deploy@vps.santiagoboada.dev sudo deploy-project reservas
+git push                                    # en tu computador
+ssh deploy@vps.santiagoboada.dev            # en el servidor, como deploy:
+git -C /srv/reservas/app pull --ff-only
+sudo deploy-project reservas
 ```
 
 ---
